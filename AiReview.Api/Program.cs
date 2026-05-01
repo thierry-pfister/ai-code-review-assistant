@@ -13,7 +13,9 @@ app.MapPost("/review", (ReviewRequest request) =>
     {
         message = finding.Message,
         severity = finding.Severity.ToString(),
-        category = finding.Category.ToString()
+        category = finding.Category.ToString(),
+        file = finding.File,
+        line = finding.Line
     });
 
     return Results.Ok(response);

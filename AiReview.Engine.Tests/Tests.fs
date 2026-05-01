@@ -22,14 +22,6 @@ module ReviewEngineTests =
         Assert.Empty(result)
 
     [<Fact>]
-    let ``analyzeDiff returns structured finding when password detected`` () =
-        let diff = "const password = \"123\";"
-
-        let result = ReviewEngine.analyzeDiff diff
-
-        Assert.NotEmpty(result)
-
-    [<Fact>]
     let ``analyzeDiff flags console log as info`` () =
         let diff = "console.log(user);"
 
@@ -50,3 +42,13 @@ module ReviewEngineTests =
         Assert.Equal(ReviewEngine.Warning, result.Head.Severity)
         Assert.Equal(ReviewEngine.Architecture, result.Head.Category)
         Assert.Contains("TODO", result.Head.Message)
+
+    [<Fact>]
+    let ``finding includes file and line metadata`` () =
+        let diff = "const password = \"123\";"
+
+        let result = ReviewEngine.analyzeDiff diff
+        let finding = result.Head
+
+        Assert.Equal("unknown", finding.File)
+        Assert.Equal(None, finding.Line)
