@@ -28,3 +28,14 @@ module ReviewEngineTests =
         let result = ReviewEngine.analyzeDiff diff
 
         Assert.NotEmpty(result)
+
+    [<Fact>]
+    let ``analyzeDiff flags console log as info`` () =
+        let diff = "console.log(user);"
+
+        let result = ReviewEngine.analyzeDiff diff
+
+        Assert.Single(result) |> ignore
+        Assert.Equal(ReviewEngine.Info, result.Head.Severity)
+        Assert.Equal(ReviewEngine.BugRisk, result.Head.Category)
+        Assert.Contains("console.log", result.Head.Message)
