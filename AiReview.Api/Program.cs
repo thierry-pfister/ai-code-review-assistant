@@ -5,11 +5,20 @@ var app = builder.Build();
 
 app.MapGet("/", () => "API is running");
 
-// Test endpoint
-app.MapPost("/review", (string diff) =>
+app.MapPost("/review", (ReviewRequest request) =>
 {
-    var result = ReviewEngine.analyzeDiff(diff);
-    return Results.Ok(new { review = result });
+    var findings = ReviewEngine.analyzeDiff(request.Diff);
+
+    var response = findings.Select(finding => new
+    {
+        message = finding.Message,
+        severity = finding.Severity.ToString(),
+        category = finding.Category.ToString()
+    });
+
+    return Results.Ok(response);
 });
 
 app.Run();
+
+record ReviewRequest(string Diff);
