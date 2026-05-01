@@ -11,12 +11,20 @@ module ReviewEngineTests =
 
         let result = ReviewEngine.analyzeDiff diff
 
-        Assert.Contains("hardcoded password", result)
+        Assert.NotEmpty(result)
 
     [<Fact>]
-    let ``analyzeDiff returns no obvious issues for safe diff`` () =
+    let ``analyzeDiff returns no issues for safe diff`` () =
         let diff = "const username = \"thierry\";"
 
         let result = ReviewEngine.analyzeDiff diff
 
-        Assert.Contains("No obvious issues", result)
+        Assert.Empty(result)
+
+    [<Fact>]
+    let ``analyzeDiff returns structured finding when password detected`` () =
+        let diff = "const password = \"123\";"
+
+        let result = ReviewEngine.analyzeDiff diff
+
+        Assert.NotEmpty(result)

@@ -10,7 +10,7 @@ open System.Reflection
 [<assembly: System.Reflection.AssemblyCompanyAttribute("AiReview.Engine.Tests")>]
 [<assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")>]
 [<assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")>]
-[<assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2dbf63e6ea1987d60e3611f7592ef51e77014ec4")>]
+[<assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e5cb935c3c51c10748ff524c25e224dccccee4ad")>]
 [<assembly: System.Reflection.AssemblyProductAttribute("AiReview.Engine.Tests")>]
 [<assembly: System.Reflection.AssemblyTitleAttribute("AiReview.Engine.Tests")>]
 [<assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")>]
