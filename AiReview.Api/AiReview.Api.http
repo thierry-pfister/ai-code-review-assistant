@@ -1,0 +1,6 @@
+@AiReview.Api_HostAddress = http://localhost:5155
+
+GET {{AiReview.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

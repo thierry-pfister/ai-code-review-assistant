@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "Dvc+xho0/FqCv4gwdQMdnNhm3O4gPE3Sbh8oGTBsb1Q=",
+  "Source": "AiReview.Api",
+  "BasePath": "_content/AiReview.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

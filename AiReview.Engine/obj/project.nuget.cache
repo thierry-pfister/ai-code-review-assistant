@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "BaMDVOWBCZLUU1kwKpfzrdS0kCha0P7gx6Deww4SsfJhWvVYNnuN7L2y+fWRbwfI6R8TTv0nYYTR027X1CLtHw==",
+  "success": true,
+  "projectFilePath": "/home/Gluttony/Home/ai-code-review-assistant/AiReview.Engine/AiReview.Engine.fsproj",
+  "expectedPackageFiles": [
+    "/home/Gluttony/.nuget/packages/fsharp.core/8.0.102/fsharp.core.8.0.102.nupkg.sha512",
+    "/home/Gluttony/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.25/microsoft.aspnetcore.app.ref.8.0.25.nupkg.sha512"
+  ],
+  "logs": []
+}

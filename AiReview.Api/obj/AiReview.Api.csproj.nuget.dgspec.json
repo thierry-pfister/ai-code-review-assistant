@@ -1,0 +1,147 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/Gluttony/Home/ai-code-review-assistant/AiReview.Api/AiReview.Api.csproj": {}
+  },
+  "projects": {
+    "/home/Gluttony/Home/ai-code-review-assistant/AiReview.Api/AiReview.Api.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/Gluttony/Home/ai-code-review-assistant/AiReview.Api/AiReview.Api.csproj",
+        "projectName": "AiReview.Api",
+        "projectPath": "/home/Gluttony/Home/ai-code-review-assistant/AiReview.Api/AiReview.Api.csproj",
+        "packagesPath": "/home/Gluttony/.nuget/packages/",
+        "outputPath": "/home/Gluttony/Home/ai-code-review-assistant/AiReview.Api/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/Gluttony/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/home/Gluttony/Home/ai-code-review-assistant/AiReview.Engine/AiReview.Engine.fsproj": {
+                "projectPath": "/home/Gluttony/Home/ai-code-review-assistant/AiReview.Engine/AiReview.Engine.fsproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.OpenApi": {
+              "target": "Package",
+              "version": "[8.0.25, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.6.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.25, 8.0.25]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.125/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/Gluttony/Home/ai-code-review-assistant/AiReview.Engine/AiReview.Engine.fsproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/Gluttony/Home/ai-code-review-assistant/AiReview.Engine/AiReview.Engine.fsproj",
+        "projectName": "AiReview.Engine",
+        "projectPath": "/home/Gluttony/Home/ai-code-review-assistant/AiReview.Engine/AiReview.Engine.fsproj",
+        "packagesPath": "/home/Gluttony/.nuget/packages/",
+        "outputPath": "/home/Gluttony/Home/ai-code-review-assistant/AiReview.Engine/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/Gluttony/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "/usr/share/dotnet/sdk/8.0.125/FSharp/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "FSharp.Core": {
+              "include": "Runtime, Compile, Build, Native, Analyzers, BuildTransitive",
+              "target": "Package",
+              "version": "[8.0.102, )",
+              "generatePathProperty": true
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.25, 8.0.25]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.125/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

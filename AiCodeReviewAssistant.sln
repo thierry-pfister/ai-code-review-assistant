@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AiReview.Api", "AiReview.Api\AiReview.Api.csproj", "{C32CA30B-2E71-4F3D-B2A5-CA3BCDEBF4D3}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "AiReview.Engine", "AiReview.Engine\AiReview.Engine.fsproj", "{724E32F2-8353-4C0F-B882-FDF12A2EE978}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C32CA30B-2E71-4F3D-B2A5-CA3BCDEBF4D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C32CA30B-2E71-4F3D-B2A5-CA3BCDEBF4D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C32CA30B-2E71-4F3D-B2A5-CA3BCDEBF4D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C32CA30B-2E71-4F3D-B2A5-CA3BCDEBF4D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{724E32F2-8353-4C0F-B882-FDF12A2EE978}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{724E32F2-8353-4C0F-B882-FDF12A2EE978}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{724E32F2-8353-4C0F-B882-FDF12A2EE978}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{724E32F2-8353-4C0F-B882-FDF12A2EE978}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
