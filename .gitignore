@@ -1,0 +1,33 @@
+# Build results
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userprefs
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# .NET
+*.cache
+*.pdb
+
+# Rider
+.idea/
+
+# Visual Studio Code settings (optional, you can keep if you want)
+# .vscode/
+
+# Node (for your future React frontend)
+node_modules/
+dist/
