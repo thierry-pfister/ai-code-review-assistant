@@ -28,4 +28,9 @@ module ReviewEngine =
                 { Message = "console.log statement left in code"
                   Severity = Info
                   Category = BugRisk }
+
+            if diff.Contains("TODO") then
+                { Message = "TODO comment left in code"
+                  Severity = Warning
+                  Category = Architecture }
         ]

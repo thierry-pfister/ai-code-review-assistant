@@ -39,3 +39,14 @@ module ReviewEngineTests =
         Assert.Equal(ReviewEngine.Info, result.Head.Severity)
         Assert.Equal(ReviewEngine.BugRisk, result.Head.Category)
         Assert.Contains("console.log", result.Head.Message)
+
+    [<Fact>]
+    let ``analyzeDiff flags todo comments as architecture warning`` () =
+        let diff = "// TODO: refactor this later"
+
+        let result = ReviewEngine.analyzeDiff diff
+
+        Assert.Single(result) |> ignore
+        Assert.Equal(ReviewEngine.Warning, result.Head.Severity)
+        Assert.Equal(ReviewEngine.Architecture, result.Head.Category)
+        Assert.Contains("TODO", result.Head.Message)
