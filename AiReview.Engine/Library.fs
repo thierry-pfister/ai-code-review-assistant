@@ -12,6 +12,10 @@ module ReviewEngine =
         | BugRisk
         | Architecture
 
+    type ReviewInput =
+        { File: string
+          Diff: string }
+
     type ReviewFinding =
         { Message: string
           Severity: Severity
@@ -19,26 +23,29 @@ module ReviewEngine =
           File: string
           Line: int option }
 
-    let analyzeDiff (diff: string) =
+    let analyzeFile (input: ReviewInput) =
         [
-            if diff.Contains("password") then
+            if input.Diff.Contains("password") then
                 { Message = "Hardcoded password detected"
                   Severity = Critical
                   Category = Security
-                  File = "unknown"
+                  File = input.File
                   Line = None }
 
-            if diff.Contains("console.log") then
+            if input.Diff.Contains("console.log") then
                 { Message = "console.log statement left in code"
                   Severity = Info
                   Category = BugRisk
-                  File = "unknown"
+                  File = input.File
                   Line = None }
 
-            if diff.Contains("TODO") then
+            if input.Diff.Contains("TODO") then
                 { Message = "TODO comment left in code"
                   Severity = Warning
                   Category = Architecture
-                  File = "unknown"
+                  File = input.File
                   Line = None }
         ]
+
+    let analyzeDiff (diff: string) =
+        analyzeFile { File = "unknown"; Diff = diff }

@@ -52,3 +52,16 @@ module ReviewEngineTests =
 
         Assert.Equal("unknown", finding.File)
         Assert.Equal(None, finding.Line)
+
+    [<Fact>]
+    let ``analyzeFile includes real file name in finding`` () =
+        let input: ReviewEngine.ReviewInput =
+            { File = "src/auth.ts"
+              Diff = "const password = \"123\";" }
+
+        let result = ReviewEngine.analyzeFile input
+        let finding = result.Head
+
+        Assert.Equal("src/auth.ts", finding.File)
+        Assert.Equal(ReviewEngine.Critical, finding.Severity)
+        Assert.Equal(ReviewEngine.Security, finding.Category)
