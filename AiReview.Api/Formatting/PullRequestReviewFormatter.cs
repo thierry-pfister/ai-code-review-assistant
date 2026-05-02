@@ -4,13 +4,16 @@ namespace AiReview.Api.Formatting;
 
 public static class PullRequestReviewFormatter
 {
+    public const string CommentMarker = "<!-- ai-code-review-assistant -->";
+
     public static string Format(IEnumerable<ReviewFindingResponse> findings)
     {
         var findingsList = findings.ToList();
 
         if (findingsList.Count == 0)
         {
-            return """
+            return $"""
+            {CommentMarker}
             ## 🤖 AI Code Review Assistant
 
             No rule-based issues were found in this pull request.
@@ -25,6 +28,7 @@ public static class PullRequestReviewFormatter
 
         var lines = new List<string>
         {
+            CommentMarker,
             "## 🤖 AI Code Review Assistant",
             "",
             $"Found **{findingsList.Count}** potential issue(s).",

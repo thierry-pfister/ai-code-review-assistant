@@ -10,6 +10,7 @@ public class PullRequestReviewFormatterTests
     {
         var result = PullRequestReviewFormatter.Format([]);
 
+        Assert.Contains(PullRequestReviewFormatter.CommentMarker, result);
         Assert.Contains("AI Code Review Assistant", result);
         Assert.Contains("No rule-based issues", result);
         Assert.Contains("Looks good", result);
@@ -38,6 +39,7 @@ public class PullRequestReviewFormatterTests
 
         var result = PullRequestReviewFormatter.Format(findings);
 
+        Assert.Contains(PullRequestReviewFormatter.CommentMarker, result);
         Assert.Contains("Found **2** potential issue", result);
         Assert.Contains("### `src/auth.ts`", result);
         Assert.Contains("Critical / Security", result);
