@@ -65,3 +65,19 @@ module ReviewEngineTests =
         Assert.Equal("src/auth.ts", finding.File)
         Assert.Equal(ReviewEngine.Critical, finding.Severity)
         Assert.Equal(ReviewEngine.Security, finding.Category)
+
+    [<Fact>]
+    let ``analyzeFiles returns findings from multiple files`` () =
+        let inputs: ReviewEngine.ReviewInput list =
+            [ { File = "src/auth.ts"
+                Diff = "const password = \"123\";" }
+              { File = "src/logger.ts"
+                Diff = "console.log(user);" }
+              { File = "src/user.ts"
+                Diff = "const username = \"thierry\";" } ]
+
+        let result = ReviewEngine.analyzeFiles inputs
+
+        Assert.Equal(2, result.Length)
+        Assert.Contains(result, fun finding -> finding.File = "src/auth.ts")
+        Assert.Contains(result, fun finding -> finding.File = "src/logger.ts")

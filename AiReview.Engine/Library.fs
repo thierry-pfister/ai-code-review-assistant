@@ -47,5 +47,9 @@ module ReviewEngine =
                   Line = None }
         ]
 
+    let analyzeFiles (inputs: ReviewInput list) =
+        inputs
+        |> List.collect analyzeFile
+
     let analyzeDiff (diff: string) =
         analyzeFile { File = "unknown"; Diff = diff }
