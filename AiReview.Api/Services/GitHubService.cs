@@ -42,4 +42,23 @@ public class GitHubService
 
         return files ?? new List<GitHubPullRequestFileResponse>();
     }
+
+    public async Task PostPullRequestComment(
+        string owner,
+        string repo,
+        int pullRequestNumber,
+        string body)
+    {
+        var url = $"https://api.github.com/repos/{owner}/{repo}/issues/{pullRequestNumber}/comments";
+
+        var payload = JsonSerializer.Serialize(new
+        {
+            body
+        });
+
+        var content = new StringContent(payload, Encoding.UTF8, "application/json");
+
+        var response = await _httpClient.PostAsync(url, content);
+        response.EnsureSuccessStatusCode();
+    }
 }
