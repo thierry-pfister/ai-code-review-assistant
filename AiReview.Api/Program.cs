@@ -8,7 +8,7 @@ app.MapGet("/", () => "API is running");
 app.MapPost("/review-files", (List<ReviewFileRequest> requests) =>
 {
     var inputs = requests
-        .Select(r => new ReviewEngine.ReviewInput(r.File, r.Diff))
+        .Select(r => new Domain.ReviewInput(r.File, r.Diff))
         .ToList();
 
     var findings = ReviewEngine.analyzeFiles(inputs);

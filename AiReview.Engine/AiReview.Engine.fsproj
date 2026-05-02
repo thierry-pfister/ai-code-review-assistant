@@ -6,7 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Library.fs" />
+    <Compile Include="Domain.fs" />
+    <Compile Include="Rules.fs" />
+    <Compile Include="ReviewEngine.fs" />
   </ItemGroup>
 
 </Project>

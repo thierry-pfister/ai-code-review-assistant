@@ -2,6 +2,7 @@ namespace AiReview.Engine.Tests
 
 open Xunit
 open AiReview.Engine
+open AiReview.Engine.Domain
 
 module ReviewEngineTests =
 
@@ -28,8 +29,8 @@ module ReviewEngineTests =
         let result = ReviewEngine.analyzeDiff diff
 
         Assert.Single(result) |> ignore
-        Assert.Equal(ReviewEngine.Info, result.Head.Severity)
-        Assert.Equal(ReviewEngine.BugRisk, result.Head.Category)
+        Assert.Equal(Info, result.Head.Severity)
+        Assert.Equal(BugRisk, result.Head.Category)
         Assert.Contains("console.log", result.Head.Message)
 
     [<Fact>]
@@ -39,8 +40,8 @@ module ReviewEngineTests =
         let result = ReviewEngine.analyzeDiff diff
 
         Assert.Single(result) |> ignore
-        Assert.Equal(ReviewEngine.Warning, result.Head.Severity)
-        Assert.Equal(ReviewEngine.Architecture, result.Head.Category)
+        Assert.Equal(Warning, result.Head.Severity)
+        Assert.Equal(Architecture, result.Head.Category)
         Assert.Contains("TODO", result.Head.Message)
 
     [<Fact>]
@@ -55,7 +56,7 @@ module ReviewEngineTests =
 
     [<Fact>]
     let ``analyzeFile includes real file name in finding`` () =
-        let input: ReviewEngine.ReviewInput =
+        let input: ReviewInput =
             { File = "src/auth.ts"
               Diff = "const password = \"123\";" }
 
@@ -63,12 +64,12 @@ module ReviewEngineTests =
         let finding = result.Head
 
         Assert.Equal("src/auth.ts", finding.File)
-        Assert.Equal(ReviewEngine.Critical, finding.Severity)
-        Assert.Equal(ReviewEngine.Security, finding.Category)
+        Assert.Equal(Critical, finding.Severity)
+        Assert.Equal(Security, finding.Category)
 
     [<Fact>]
     let ``analyzeFiles returns findings from multiple files`` () =
-        let inputs: ReviewEngine.ReviewInput list =
+        let inputs: ReviewInput list =
             [ { File = "src/auth.ts"
                 Diff = "const password = \"123\";" }
               { File = "src/logger.ts"
