@@ -1,6 +1,6 @@
 using AiReview.Api.Contracts;
+using AiReview.Api.Mapping;
 using AiReview.Engine;
-using Microsoft.FSharp.Core;
 
 namespace AiReview.Api.Endpoints;
 
@@ -16,15 +16,7 @@ public static class ReviewEndpoints
 
             var findings = ReviewEngine.analyzeFiles(inputs);
 
-            var response = findings.Select(finding =>
-                new ReviewFindingResponse(
-                    finding.Message,
-                    finding.Severity.ToString(),
-                    finding.Category.ToString(),
-                    finding.File,
-                    OptionModule.ToNullable(finding.Line)
-                )
-            );
+            var response = findings.Select(ReviewFindingMapper.ToResponse);
 
             return Results.Ok(response);
         });
