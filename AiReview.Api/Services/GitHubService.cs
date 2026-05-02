@@ -1,5 +1,5 @@
 using System.Text.Json;
-using System.Text.Json.Serialization;
+using AiReview.Api.Contracts;
 
 namespace AiReview.Api.Services;
 
@@ -13,7 +13,7 @@ public class GitHubService
         _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("AiReviewBot");
     }
 
-    public async Task<List<GitHubFile>> GetPullRequestFiles(
+    public async Task<List<GitHubPullRequestFileResponse>> GetPullRequestFiles(
         string owner,
         string repo,
         int pullRequestNumber)
@@ -25,17 +25,8 @@ public class GitHubService
 
         var json = await response.Content.ReadAsStringAsync();
 
-        var files = JsonSerializer.Deserialize<List<GitHubFile>>(json);
+        var files = JsonSerializer.Deserialize<List<GitHubPullRequestFileResponse>>(json);
 
-        return files ?? new List<GitHubFile>();
+        return files ?? new List<GitHubPullRequestFileResponse>();
     }
-}
-
-public class GitHubFile
-{
-    [JsonPropertyName("filename")]
-    public string Filename { get; set; } = default!;
-
-    [JsonPropertyName("patch")]
-    public string? Patch { get; set; }
 }
