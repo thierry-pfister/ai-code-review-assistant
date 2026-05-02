@@ -1,3 +1,6 @@
+using System.Text.Json;
+using AiReview.Api.Contracts;
+
 namespace AiReview.Api.Endpoints;
 
 public static class GitHubWebhookEndpoints
@@ -9,8 +12,15 @@ public static class GitHubWebhookEndpoints
             using var reader = new StreamReader(request.Body);
             var body = await reader.ReadToEndAsync();
 
-            Console.WriteLine("Received GitHub webhook:");
-            Console.WriteLine(body);
+            var webhook = JsonSerializer.Deserialize<GitHubWebhookRequest>(body);
+
+            if (webhook == null)
+                return Results.BadRequest();
+
+            Console.WriteLine("GitHub Event Received:");
+            Console.WriteLine($"Action: {webhook.Action}");
+            Console.WriteLine($"Repo: {webhook.Repository?.FullName}");
+            Console.WriteLine($"PR: {webhook.PullRequest?.Number}");
 
             return Results.Ok();
         });
