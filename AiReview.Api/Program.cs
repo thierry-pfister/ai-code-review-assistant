@@ -25,6 +25,17 @@ app.MapPost("/review-files", (List<ReviewFileRequest> requests) =>
     return Results.Ok(response);
 });
 
+app.MapPost("/webhooks/github", async (HttpRequest request) =>
+{
+    using var reader = new StreamReader(request.Body);
+    var body = await reader.ReadToEndAsync();
+
+    Console.WriteLine("Received GitHub webhook:");
+    Console.WriteLine(body);
+
+    return Results.Ok();
+});
+
 app.Run();
 
 record ReviewFileRequest(string File, string Diff);
