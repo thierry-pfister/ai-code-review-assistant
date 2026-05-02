@@ -5,9 +5,13 @@ var app = builder.Build();
 
 app.MapGet("/", () => "API is running");
 
-app.MapPost("/review", (ReviewRequest request) =>
+app.MapPost("/review-files", (List<ReviewFileRequest> requests) =>
 {
-    var findings = ReviewEngine.analyzeDiff(request.Diff);
+    var inputs = requests
+        .Select(r => new ReviewEngine.ReviewInput(r.File, r.Diff))
+        .ToList();
+
+    var findings = ReviewEngine.analyzeFiles(inputs);
 
     var response = findings.Select(finding => new
     {
@@ -23,4 +27,4 @@ app.MapPost("/review", (ReviewRequest request) =>
 
 app.Run();
 
-record ReviewRequest(string Diff);
+record ReviewFileRequest(string File, string Diff);

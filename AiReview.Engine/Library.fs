@@ -47,9 +47,10 @@ module ReviewEngine =
                   Line = None }
         ]
 
-    let analyzeFiles (inputs: ReviewInput list) =
+    let analyzeFiles (inputs: seq<ReviewInput>) =
         inputs
-        |> List.collect analyzeFile
+        |> Seq.collect analyzeFile
+        |> Seq.toList
 
     let analyzeDiff (diff: string) =
         analyzeFile { File = "unknown"; Diff = diff }
