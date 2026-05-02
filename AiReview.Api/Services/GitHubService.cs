@@ -1,3 +1,5 @@
+using System.Net.Http.Headers;
+using System.Text;
 using System.Text.Json;
 using AiReview.Api.Contracts;
 
@@ -6,11 +8,22 @@ namespace AiReview.Api.Services;
 public class GitHubService
 {
     private readonly HttpClient _httpClient;
+    private readonly IConfiguration _configuration;
 
-    public GitHubService(HttpClient httpClient)
+    public GitHubService(HttpClient httpClient, IConfiguration configuration)
     {
         _httpClient = httpClient;
+        _configuration = configuration;
+
         _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("AiReviewBot");
+
+        var token = _configuration["GitHub:Token"];
+
+        if (!string.IsNullOrWhiteSpace(token))
+        {
+            _httpClient.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", token);
+        }
     }
 
     public async Task<List<GitHubPullRequestFileResponse>> GetPullRequestFiles(
