@@ -8,6 +8,7 @@ builder.Services.AddScoped<IGitHubService>(provider =>
     provider.GetRequiredService<GitHubService>());
 
 builder.Services.AddScoped<PullRequestCommentService>();
+builder.Services.AddScoped<IGitHubWebhookSignatureValidator, GitHubWebhookSignatureValidator>();
 
 var app = builder.Build();
 

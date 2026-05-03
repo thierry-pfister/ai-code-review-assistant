@@ -21,10 +21,16 @@ public static class GitHubWebhooksEndpoints
         app.MapPost("/webhooks/github", async (
             HttpRequest request,
             IGitHubService gitHubService,
-            PullRequestCommentService pullRequestCommentService) =>
+            PullRequestCommentService pullRequestCommentService,
+            IGitHubWebhookSignatureValidator signatureValidator) =>
         {
             using var reader = new StreamReader(request.Body);
             var body = await reader.ReadToEndAsync();
+
+            var signatureHeader = request.Headers["X-Hub-Signature-256"].FirstOrDefault();
+
+            if (!signatureValidator.IsValid(body, signatureHeader))
+                return Results.Unauthorized();
 
             var webhook = JsonSerializer.Deserialize<GitHubWebhookRequest>(body);
 
