@@ -1,5 +1,9 @@
 using System.Text.Json;
 using AiReview.Api.Contracts;
+using AiReview.Api.Formatting;
+using AiReview.Api.Mapping;
+using AiReview.Api.Services;
+using AiReview.Engine;
 
 namespace AiReview.Api.Endpoints;
 
@@ -14,7 +18,10 @@ public static class GitHubWebhooksEndpoints
 
     public static void MapGitHubWebhookEndpoints(this WebApplication app)
     {
-        app.MapPost("/webhooks/github", async (HttpRequest request) =>
+        app.MapPost("/webhooks/github", async (
+            HttpRequest request,
+            IGitHubService gitHubService,
+            PullRequestCommentService pullRequestCommentService) =>
         {
             using var reader = new StreamReader(request.Body);
             var body = await reader.ReadToEndAsync();
@@ -30,17 +37,43 @@ public static class GitHubWebhooksEndpoints
             if (!SupportedPullRequestActions.Contains(webhook.Action))
                 return Results.Ok(new { ignored = true, reason = $"Unsupported action: {webhook.Action}" });
 
-            Console.WriteLine("Supported GitHub Pull Request Event:");
-            Console.WriteLine($"Action: {webhook.Action}");
-            Console.WriteLine($"Repo: {webhook.Repository.FullName}");
-            Console.WriteLine($"PR: {webhook.PullRequest.Number}");
+            var repoParts = webhook.Repository.FullName.Split('/');
+
+            if (repoParts.Length != 2)
+                return Results.BadRequest("Invalid repository full name.");
+
+            var owner = repoParts[0];
+            var repo = repoParts[1];
+            var prNumber = webhook.PullRequest.Number;
+
+            var files = await gitHubService.GetPullRequestFiles(owner, repo, prNumber);
+
+            var reviewInputs = files
+                .Select(GitHubFileMapper.ToReviewInput)
+                .ToList();
+
+            var findings = ReviewEngine.analyzeFiles(reviewInputs);
+
+            var response = findings
+                .Select(ReviewFindingMapper.ToResponse)
+                .ToList();
+
+            var summary = PullRequestReviewFormatter.Format(response);
+
+            await pullRequestCommentService.UpsertReviewComment(
+                owner,
+                repo,
+                prNumber,
+                summary
+            );
 
             return Results.Ok(new
             {
                 accepted = true,
-                action = webhook.Action,
                 repository = webhook.Repository.FullName,
-                pullRequestNumber = webhook.PullRequest.Number
+                pullRequestNumber = prNumber,
+                changedFiles = files.Count,
+                findings = response
             });
         });
     }

@@ -31,3 +31,6 @@ Thumbs.db
 # Node (for your future React frontend)
 node_modules/
 dist/
+
+.env
+appsettings.Development.json

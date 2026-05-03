@@ -9,6 +9,8 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "AiReview.Engine", "AiReview
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "AiReview.Engine.Tests", "AiReview.Engine.Tests\AiReview.Engine.Tests.fsproj", "{F550761F-9DC2-488E-9C15-8532983310C8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AiReview.Api.Tests", "AiReview.Api.Tests\AiReview.Api.Tests.csproj", "{08D515C7-DA56-456B-86AB-82F903D7539B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{F550761F-9DC2-488E-9C15-8532983310C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F550761F-9DC2-488E-9C15-8532983310C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F550761F-9DC2-488E-9C15-8532983310C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08D515C7-DA56-456B-86AB-82F903D7539B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08D515C7-DA56-456B-86AB-82F903D7539B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08D515C7-DA56-456B-86AB-82F903D7539B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08D515C7-DA56-456B-86AB-82F903D7539B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
