@@ -2,11 +2,10 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using AiReview.Api.Contracts;
-using AiReview.Api.Formatting;
 
 namespace AiReview.Api.Services;
 
-public class GitHubService
+public class GitHubService : IGitHubService
 {
     private readonly HttpClient _httpClient;
     private readonly IConfiguration _configuration;
@@ -97,25 +96,5 @@ public class GitHubService
 
         var response = await _httpClient.PatchAsync(url, content);
         response.EnsureSuccessStatusCode();
-    }
-
-    public async Task UpsertPullRequestReviewComment(
-        string owner,
-        string repo,
-        int pullRequestNumber,
-        string body)
-    {
-        var comments = await GetPullRequestComments(owner, repo, pullRequestNumber);
-
-        var existingComment = comments.FirstOrDefault(comment =>
-            comment.Body.Contains(PullRequestReviewFormatter.CommentMarker));
-
-        if (existingComment is null)
-        {
-            await CreatePullRequestComment(owner, repo, pullRequestNumber, body);
-            return;
-        }
-
-        await UpdatePullRequestComment(owner, repo, existingComment.Id, body);
     }
 }

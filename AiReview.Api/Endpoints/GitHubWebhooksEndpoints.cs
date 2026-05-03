@@ -20,7 +20,8 @@ public static class GitHubWebhooksEndpoints
     {
         app.MapPost("/webhooks/github", async (
             HttpRequest request,
-            GitHubService gitHubService) =>
+            IGitHubService gitHubService,
+            PullRequestCommentService pullRequestCommentService) =>
         {
             using var reader = new StreamReader(request.Body);
             var body = await reader.ReadToEndAsync();
@@ -59,7 +60,7 @@ public static class GitHubWebhooksEndpoints
 
             var summary = PullRequestReviewFormatter.Format(response);
 
-            await gitHubService.UpsertPullRequestReviewComment(
+            await pullRequestCommentService.UpsertReviewComment(
                 owner,
                 repo,
                 prNumber,
