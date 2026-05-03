@@ -45,34 +45,27 @@ public static class GitHubWebhooksEndpoints
             var repo = repoParts[1];
             var prNumber = webhook.PullRequest.Number;
 
-            // 1. Fetch files from GitHub
             var files = await gitHubService.GetPullRequestFiles(owner, repo, prNumber);
 
-            // 2. Map to F# domain input
             var reviewInputs = files
                 .Select(GitHubFileMapper.ToReviewInput)
                 .ToList();
 
-            // 3. Run analysis
             var findings = ReviewEngine.analyzeFiles(reviewInputs);
 
-            // 4. Map to API response
             var response = findings
                 .Select(ReviewFindingMapper.ToResponse)
                 .ToList();
 
-            // 5. Format PR comment
             var summary = PullRequestReviewFormatter.Format(response);
 
-            // 6. Post comment to GitHub PR
-            await gitHubService.PostPullRequestComment(
+            await gitHubService.UpsertPullRequestReviewComment(
                 owner,
                 repo,
                 prNumber,
                 summary
             );
 
-            // 7. Return API response
             return Results.Ok(new
             {
                 accepted = true,

@@ -2,6 +2,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using AiReview.Api.Contracts;
+using AiReview.Api.Formatting;
 
 namespace AiReview.Api.Services;
 
@@ -43,7 +44,24 @@ public class GitHubService
         return files ?? new List<GitHubPullRequestFileResponse>();
     }
 
-    public async Task PostPullRequestComment(
+    public async Task<List<GitHubIssueCommentResponse>> GetPullRequestComments(
+        string owner,
+        string repo,
+        int pullRequestNumber)
+    {
+        var url = $"https://api.github.com/repos/{owner}/{repo}/issues/{pullRequestNumber}/comments";
+
+        var response = await _httpClient.GetAsync(url);
+        response.EnsureSuccessStatusCode();
+
+        var json = await response.Content.ReadAsStringAsync();
+
+        var comments = JsonSerializer.Deserialize<List<GitHubIssueCommentResponse>>(json);
+
+        return comments ?? new List<GitHubIssueCommentResponse>();
+    }
+
+    public async Task CreatePullRequestComment(
         string owner,
         string repo,
         int pullRequestNumber,
@@ -60,5 +78,44 @@ public class GitHubService
 
         var response = await _httpClient.PostAsync(url, content);
         response.EnsureSuccessStatusCode();
+    }
+
+    public async Task UpdatePullRequestComment(
+        string owner,
+        string repo,
+        long commentId,
+        string body)
+    {
+        var url = $"https://api.github.com/repos/{owner}/{repo}/issues/comments/{commentId}";
+
+        var payload = JsonSerializer.Serialize(new
+        {
+            body
+        });
+
+        var content = new StringContent(payload, Encoding.UTF8, "application/json");
+
+        var response = await _httpClient.PatchAsync(url, content);
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task UpsertPullRequestReviewComment(
+        string owner,
+        string repo,
+        int pullRequestNumber,
+        string body)
+    {
+        var comments = await GetPullRequestComments(owner, repo, pullRequestNumber);
+
+        var existingComment = comments.FirstOrDefault(comment =>
+            comment.Body.Contains(PullRequestReviewFormatter.CommentMarker));
+
+        if (existingComment is null)
+        {
+            await CreatePullRequestComment(owner, repo, pullRequestNumber, body);
+            return;
+        }
+
+        await UpdatePullRequestComment(owner, repo, existingComment.Id, body);
     }
 }
